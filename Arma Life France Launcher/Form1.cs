@@ -13,10 +13,12 @@ using System.Xml;
 using System.Net;
 using System.Threading;
 using Newtonsoft.Json;
+using Octokit;
 using System.Diagnostics;
 using MaterialSkin.Controls;
 using MaterialSkin;
 using System.Collections;
+using System.Reflection;
 using Steamworks;
 using static ALF.Main;
 
@@ -37,6 +39,7 @@ namespace Arma_Life_France_Launcher
         private List<FileALF> remoteFiles;
         private List<FileALF> localFiles;
         private ConfigALF config = new ConfigALF();
+        public string AppVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
         //ColorScheme
         ColorScheme redColor = new ColorScheme(Primary.Red600, Primary.Red800, Primary.Red800, Accent.Red200, TextShade.WHITE);
@@ -347,8 +350,8 @@ namespace Arma_Life_France_Launcher
         private static void DecompressFileLZMA(string inFile, string outFile)
         {
             SevenZip.Compression.LZMA.Decoder coder = new SevenZip.Compression.LZMA.Decoder();
-            FileStream input = new FileStream(inFile, FileMode.Open);
-            FileStream output = new FileStream(outFile, FileMode.Create);
+            FileStream input = new FileStream(inFile, System.IO.FileMode.Open);
+            FileStream output = new FileStream(outFile, System.IO.FileMode.Create);
 
             // Read the decoder properties
             byte[] properties = new byte[5];
@@ -481,11 +484,40 @@ namespace Arma_Life_France_Launcher
                     break;
             }
 
+            //////////////////////////////////
+            checkForUpdate();
+            //////////////////////////////////
+
             materialLabel3.Text = "Joueurs en ligne : " + Get("https://home.serveur-lagarde.fr/alf/View.php?api&getplayerscounter");
             SteamAPI.Init();
             if (SteamAPI.IsSteamRunning())
             {
                 materialLabel4.Text = "SteamID : " + SteamUser.GetSteamID().ToString();
+            }
+        }
+
+        private void checkForUpdate()
+        {
+            try
+            {
+                var client = new GitHubClient(new ProductHeaderValue("Arma-3-Life-France-Launcher"));
+
+                var LatestRelease = client.Repository.Release.GetLatest("loann25310", "Arma-3-Life-France-Launcher").Result;
+
+                if (LatestRelease.TagName != AppVersion)
+                {
+                    MessageBox.Show(this, "Mise à jour disponible", "Mise à jour", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    WebClient WebClient = new WebClient();
+                    Uri Uri = new Uri(LatestRelease.Assets[0].BrowserDownloadUrl);
+                    WebClient.DownloadFile(Uri, config.GetAppData() + "maj_alf_launcher.exe");
+                    MessageBox.Show(this, "Téléchargement terminé.\r\nAprès la validation du message, l'installateur s'ouvrira. Réinstaller l'application normalement.", "Mise à jour", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    Process.Start(config.GetAppData() + "maj_alf_launcher.exe");
+                    System.Windows.Forms.Application.Exit();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, "Erreur Fatale lors de la verification/téléchargement de la mise à jour. Verifiez votre connection internet. Si le problème persite contactez un Administrateur.\r\n\r\nCode d'erreur : " + ex.Message, "Erreur Fatale", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

@@ -120,6 +120,11 @@ namespace ALF
             {
                 return darkMode;
             }
+
+            public string GetAppData()
+            {
+                return AppData;
+            }
         }
 
         public class ConfigFileALF
