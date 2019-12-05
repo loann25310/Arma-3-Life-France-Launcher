@@ -21,6 +21,7 @@ using System.Collections;
 using System.Reflection;
 using Steamworks;
 using static ALF.Main;
+using Newtonsoft.Json.Linq;
 
 namespace Arma_Life_France_Launcher
 {
@@ -42,6 +43,7 @@ namespace Arma_Life_France_Launcher
         public string AppVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
         private bool blockLaunch = false;
         private bool Maintenance = false;
+        private bool showNews = true;
 #if DEBUG
         private bool debug = true;
 #else
@@ -461,6 +463,18 @@ namespace Arma_Life_France_Launcher
             else
                 materialSkin.Theme = MaterialSkinManager.Themes.LIGHT;
             Color progressColor = Color.DodgerBlue;
+
+            news_image.Visible = showNews;
+            news_name.Visible = showNews;
+            news_text.Visible = showNews;
+            if (showNews)
+            {
+                NewsALF news = JsonConvert.DeserializeObject<NewsALF>(Get("https://home.serveur-lagarde.fr/alf/View.php?api&getNews"));
+                news_image.Load(news.image);
+                news_name.Text = news.name;
+                news_text.Text = news.text;
+            }
+
             Maintenance = false;
             switch (Get("https://home.serveur-lagarde.fr/alf/View.php?api&getTheme"))
             {
@@ -542,17 +556,20 @@ namespace Arma_Life_France_Launcher
         {
             try
             {
+                // string GitHubToken = "TOKENHERE";
                 var client = new GitHubClient(new ProductHeaderValue("Arma-3-Life-France-Launcher"));
-                var tokenAuth = new Credentials("bd5490d0d74a83aae31810bd2d33fcd8e0beea65");
-                client.Credentials = tokenAuth;
+                // var tokenAuth = new Credentials(GitHubToken);
+                // client.Credentials = tokenAuth;
 
                 var LatestRelease = client.Repository.Release.GetLatest("loann25310", "Arma-3-Life-France-Launcher").Result;
 
-                if (LatestRelease.TagName != AppVersion)
+                if (LatestRelease.TagName != AppVersion && !LatestRelease.Prerelease)
                 {
-                    MessageBox.Show(this, "Mise à jour disponible", "Mise à jour", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(this, "Mise à jour disponible.\r\n\r\nNom :\r\n"+ LatestRelease.Name, "Mise à jour", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     WebClient WebClient = new WebClient();
                     Uri Uri = new Uri(LatestRelease.Assets[0].BrowserDownloadUrl);
+                    // WebClient.Headers.Add("Authorization: token "+ GitHubToken);
+                    // WebClient.Credentials = new NetworkCredential("loann25310", GitHubToken);
                     WebClient.DownloadFile(Uri, config.GetAppData() + "maj_alf_launcher.exe");
                     MessageBox.Show(this, "Téléchargement terminé.\r\nAprès la validation du message, l'installateur s'ouvrira. Réinstaller l'application normalement.", "Mise à jour", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     Process.Start(config.GetAppData() + "maj_alf_launcher.exe");

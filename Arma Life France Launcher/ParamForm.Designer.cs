@@ -45,6 +45,7 @@
             this.materialLabel3 = new MaterialSkin.Controls.MaterialLabel();
             this.materialSingleLineTextField1 = new MaterialSkin.Controls.MaterialSingleLineTextField();
             this.materialFlatButton1 = new MaterialSkin.Controls.MaterialFlatButton();
+            this.versionLabel = new MaterialSkin.Controls.MaterialLabel();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -311,12 +312,25 @@
             this.materialFlatButton1.UseVisualStyleBackColor = true;
             this.materialFlatButton1.Click += new System.EventHandler(this.materialSingleLineTextField1_DoubleClick);
             // 
+            // versionLabel
+            // 
+            this.versionLabel.Depth = 0;
+            this.versionLabel.Font = new System.Drawing.Font("Roboto", 11F);
+            this.versionLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.versionLabel.Location = new System.Drawing.Point(0, 308);
+            this.versionLabel.MouseState = MaterialSkin.MouseState.HOVER;
+            this.versionLabel.Name = "versionLabel";
+            this.versionLabel.Size = new System.Drawing.Size(89, 21);
+            this.versionLabel.TabIndex = 8;
+            this.versionLabel.Text = "V.0.0.0.0";
+            // 
             // ParamForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(427, 328);
+            this.Controls.Add(this.versionLabel);
             this.Controls.Add(this.materialFlatButton1);
             this.Controls.Add(this.materialSingleLineTextField1);
             this.Controls.Add(this.materialLabel3);
@@ -356,5 +370,6 @@
         private MaterialSkin.Controls.MaterialLabel materialLabel3;
         private MaterialSkin.Controls.MaterialSingleLineTextField materialSingleLineTextField1;
         private MaterialSkin.Controls.MaterialFlatButton materialFlatButton1;
+        private MaterialSkin.Controls.MaterialLabel versionLabel;
     }
 }

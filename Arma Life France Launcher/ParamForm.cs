@@ -12,12 +12,13 @@ using MaterialSkin;
 using System.Net;
 using System.IO;
 using static ALF.Main;
+using System.Reflection;
 
 namespace Arma_Life_France_Launcher
 {
     public partial class ParamForm : MaterialForm
     {
-
+        public string AppVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
         private string currentColor = "";
         private ConfigALF config = new ConfigALF();
         //ColorScheme
@@ -37,6 +38,7 @@ namespace Arma_Life_France_Launcher
 
         private void ParamForm_Load(object sender, EventArgs e)
         {
+            versionLabel.Text = "V." + AppVersion;
             config = new ConfigALF();
             Form form = new Form1();
             materialSkin.AddFormToManage(this);

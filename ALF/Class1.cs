@@ -134,5 +134,12 @@ namespace ALF
             public string customColor;
             public string themeMode;
         }
+
+        public class NewsALF
+        {
+            public string name;
+            public string text;
+            public string image;
+        }
     }
 }

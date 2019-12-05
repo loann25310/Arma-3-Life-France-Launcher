@@ -148,6 +148,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="alf.ico" />
+    <None Include="Resources\170x208.png" />
+    <None Include="Resources\170x209.png" />
+    <None Include="Resources\170x200.png" />
+    <None Include="Resources\805x127.png" />
+    <None Include="Resources\125x190.png" />
+    <None Include="Resources\error.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
