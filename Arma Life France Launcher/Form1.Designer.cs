@@ -118,6 +118,7 @@
             // 
             this.playBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.playBtn.Depth = 0;
+            this.playBtn.Enabled = false;
             this.playBtn.Location = new System.Drawing.Point(612, 416);
             this.playBtn.MouseState = MaterialSkin.MouseState.HOVER;
             this.playBtn.Name = "playBtn";

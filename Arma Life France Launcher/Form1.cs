@@ -40,6 +40,14 @@ namespace Arma_Life_France_Launcher
         private List<FileALF> localFiles;
         private ConfigALF config = new ConfigALF();
         public string AppVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+        private bool blockLaunch = false;
+        private bool Maintenance = false;
+#if DEBUG
+        private bool debug = true;
+#else
+        private bool debug = false;
+#endif
+
 
         //ColorScheme
         ColorScheme redColor = new ColorScheme(Primary.Red600, Primary.Red800, Primary.Red800, Accent.Red200, TextShade.WHITE);
@@ -64,6 +72,7 @@ namespace Arma_Life_France_Launcher
             progressBar2.Maximum = 100;
             button1.Enabled = false;
             playBtn.Enabled = false;
+            blockLaunch = true;
             lookupForLocal.RunWorkerAsync("forced");
         }
 
@@ -121,6 +130,7 @@ namespace Arma_Life_France_Launcher
         {
             try
             {
+                blockLaunch = true;
                 XmlDocument doc = new XmlDocument();
                 string xmlData = Get(APIurl + fileAPI);
 
@@ -255,6 +265,7 @@ namespace Arma_Life_France_Launcher
                         playBtn.Enabled = true;
                         stateLabel.Text = "ModPack à jour";
                     }));
+                    blockLaunch = false;
                 }
                 else
                 {
@@ -326,6 +337,7 @@ namespace Arma_Life_France_Launcher
                         playBtn.Enabled = true;
                         stateLabel.Text = "ModPack à jour";
                     }));
+                    blockLaunch = false;
                 }
             }
             catch(Exception ex)
@@ -377,6 +389,10 @@ namespace Arma_Life_France_Launcher
 
         private void playBtn_Click(object sender, EventArgs e)
         {
+            if (Maintenance)
+                MessageBox.Show("Maintenance en cours ...");
+            if (blockLaunch || Maintenance)
+                return;
             Process arma3 = new Process();
             arma3.StartInfo.FileName = armaFolder + "arma3battleye.exe";
             arma3.StartInfo.Arguments = "-mod="+modName+" -skipIntro -noSplash -noPause -world=empty -noFilePatching -nologs -connect="+ serverIP + " -port="+serverPort;
@@ -410,6 +426,14 @@ namespace Arma_Life_France_Launcher
         private void timer1_Tick(object sender, EventArgs e)
         {
             materialLabel3.Text = "Joueurs en ligne : " + Get("https://home.serveur-lagarde.fr/alf/View.php?api&getplayerscounter");
+            if (Get("https://home.serveur-lagarde.fr/alf/View.php?api&getTheme") == "maintenance")
+            {
+                Maintenance = true;
+            }
+            else
+            {
+                Maintenance = false;
+            }
         }
 
         private void pictureBox2_Click(object sender, EventArgs e)
@@ -436,56 +460,74 @@ namespace Arma_Life_France_Launcher
                 materialSkin.Theme = MaterialSkinManager.Themes.DARK;
             else
                 materialSkin.Theme = MaterialSkinManager.Themes.LIGHT;
+            Color progressColor = Color.DodgerBlue;
+            Maintenance = false;
             switch (Get("https://home.serveur-lagarde.fr/alf/View.php?api&getTheme"))
             {
                 case "red":
+                    progressColor = Color.FromArgb(229, 57, 53);
                     materialSkin.ColorScheme = redColor;
                     break;
                 case "green":
+                    progressColor = Color.FromArgb(67, 160, 71);
                     materialSkin.ColorScheme = greenColor;
                     break;
                 case "blue":
+                    progressColor = Color.FromArgb(30, 136, 229);
                     materialSkin.ColorScheme = blueColor;
                     break;
                 case "pinkColor":
+                    progressColor = Color.FromArgb(216, 27, 96);
                     materialSkin.ColorScheme = pinkColor;
                     break;
                 case "lightblueColor":
+                    progressColor = Color.FromArgb(3, 155, 229);
                     materialSkin.ColorScheme = lightblueColor;
                     break;
                 case "lightgreenColor":
+                    progressColor = Color.FromArgb(124, 179, 66);
                     materialSkin.ColorScheme = lightgreenColor;
                     break;
-                case "yellowColor":
+                case "maintenance":
+                    progressColor = Color.FromArgb(253, 216, 53);
                     materialSkin.ColorScheme = yellowColor;
+                    Maintenance = true;
                     break;
                 case "ignore":
                     switch (config.GetCustomColor())
                     {
                         case "red":
+                            progressColor = Color.FromArgb(229, 57, 53);
                             materialSkin.ColorScheme = redColor;
                             break;
                         case "green":
+                            progressColor = Color.FromArgb(67, 160, 71);
                             materialSkin.ColorScheme = greenColor;
                             break;
                         case "blue":
+                            progressColor = Color.FromArgb(30, 136, 229);
                             materialSkin.ColorScheme = blueColor;
                             break;
                         case "pinkColor":
+                            progressColor = Color.FromArgb(216, 27, 96);
                             materialSkin.ColorScheme = pinkColor;
                             break;
                         case "lightblueColor":
+                            progressColor = Color.FromArgb(3, 155, 229);
                             materialSkin.ColorScheme = lightblueColor;
                             break;
                         case "lightgreenColor":
+                            progressColor = Color.FromArgb(124, 179, 66);
                             materialSkin.ColorScheme = lightgreenColor;
                             break;
                     }
                     break;
             }
+            progressBar1.ForeColor = progressColor;
 
             //////////////////////////////////
-            checkForUpdate();
+            if(!debug)
+                checkForUpdate();
             //////////////////////////////////
 
             materialLabel3.Text = "Joueurs en ligne : " + Get("https://home.serveur-lagarde.fr/alf/View.php?api&getplayerscounter");
@@ -501,6 +543,8 @@ namespace Arma_Life_France_Launcher
             try
             {
                 var client = new GitHubClient(new ProductHeaderValue("Arma-3-Life-France-Launcher"));
+                var tokenAuth = new Credentials("bd5490d0d74a83aae31810bd2d33fcd8e0beea65");
+                client.Credentials = tokenAuth;
 
                 var LatestRelease = client.Repository.Release.GetLatest("loann25310", "Arma-3-Life-France-Launcher").Result;
 
@@ -518,6 +562,7 @@ namespace Arma_Life_France_Launcher
             catch (Exception ex)
             {
                 MessageBox.Show(this, "Erreur Fatale lors de la verification/téléchargement de la mise à jour. Verifiez votre connection internet. Si le problème persite contactez un Administrateur.\r\n\r\nCode d'erreur : " + ex.Message, "Erreur Fatale", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Windows.Forms.Application.Exit();
             }
         }
 

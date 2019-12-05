@@ -77,7 +77,7 @@ namespace Arma_Life_France_Launcher
                     materialRadioButton6.Checked = true;
                     materialSkin.ColorScheme = lightgreenColor;
                     break;
-                case "yellowColor":
+                case "maintenance":
                     materialSkin.ColorScheme = yellowColor;
                     break;
                 case "ignore":
@@ -183,7 +183,8 @@ namespace Arma_Life_France_Launcher
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
-                openFileDialog.Filter = "Arma 3 x64|arma3_x64.exe|Arma 3|arma3.exe";
+                openFileDialog.Filter = "Arma 3|arma3battleye.exe";
+                openFileDialog.FileName = "arma3battleye.exe";
                 openFileDialog.InitialDirectory = @"C:\Program Files (x86)\Steam\steamapps\common\Arma 3\";
                 while (openFileDialog.ShowDialog() != DialogResult.OK) { }
                 FileInfo fileInfo = new FileInfo(openFileDialog.FileName);
