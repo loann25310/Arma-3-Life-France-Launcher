@@ -28,14 +28,14 @@ namespace Arma_Life_France_Launcher
     public partial class Form1 : MaterialForm
     {
         
-        private string APIurl = "https://arma3lifefrance.fr/HKu7W22yf6oAcU4HL4eHez35MEu7/";
+        private string APIurl = "--HIDE--";
         private string BGurl = "https://i.imgur.com/xfopdlF.png";
         private string fileAPI = "ALF.xml";
         private string armaFolder = "G:\\Steam\\steamapps\\common\\Arma 3\\";
         private string modName = "@ALF";
         private string modeCompression = "lzma";
         private string remoteVersion = "";
-        private string serverIP = "151.80.109.47";
+        private string serverIP = "--HIDE--";
         private int serverPort = 2302;
         private List<FileALF> remoteFiles;
         private List<FileALF> localFiles;
@@ -427,8 +427,8 @@ namespace Arma_Life_France_Launcher
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            materialLabel3.Text = "Joueurs en ligne : " + Get("https://home.serveur-lagarde.fr/alf/View.php?api&getplayerscounter");
-            if (Get("https://home.serveur-lagarde.fr/alf/View.php?api&getTheme") == "maintenance")
+            materialLabel3.Text = "Joueurs en ligne : " + Get("--HIDE-");
+            if (Get("--HIDE--") == "maintenance")
             {
                 Maintenance = true;
             }
@@ -469,14 +469,14 @@ namespace Arma_Life_France_Launcher
             news_text.Visible = showNews;
             if (showNews)
             {
-                NewsALF news = JsonConvert.DeserializeObject<NewsALF>(Get("https://home.serveur-lagarde.fr/alf/View.php?api&getNews"));
+                NewsALF news = JsonConvert.DeserializeObject<NewsALF>(Get("--HIDE--"));
                 news_image.Load(news.image);
                 news_name.Text = news.name;
                 news_text.Text = news.text;
             }
 
             Maintenance = false;
-            switch (Get("https://home.serveur-lagarde.fr/alf/View.php?api&getTheme"))
+            switch (Get("--HIDE--"))
             {
                 case "red":
                     progressColor = Color.FromArgb(229, 57, 53);
@@ -544,7 +544,7 @@ namespace Arma_Life_France_Launcher
                 checkForUpdate();
             //////////////////////////////////
 
-            materialLabel3.Text = "Joueurs en ligne : " + Get("https://home.serveur-lagarde.fr/alf/View.php?api&getplayerscounter");
+            materialLabel3.Text = "Joueurs en ligne : " + Get("--HIDE--");
             SteamAPI.Init();
             if (SteamAPI.IsSteamRunning())
             {
