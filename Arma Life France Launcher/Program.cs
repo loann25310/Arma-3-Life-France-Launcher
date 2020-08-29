@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Arma_Life_France_Launcher
+namespace Arzora_Life_Launcher
 {
     static class Program
     {

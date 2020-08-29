@@ -20,26 +20,26 @@ using MaterialSkin;
 using System.Collections;
 using System.Reflection;
 using Steamworks;
-using static ALF.Main;
+using static ArzoraLife.Main;
 using Newtonsoft.Json.Linq;
 
-namespace Arma_Life_France_Launcher
+namespace Arzora_Life_Launcher
 {
     public partial class Form1 : MaterialForm
     {
         
-        private string APIurl = "--HIDE--";
-        private string BGurl = "https://i.imgur.com/xfopdlF.png";
-        private string fileAPI = "ALF.xml";
+        private string APIurl = "http://193.70.6.201/";
+        private string BGurl = "https://media.discordapp.net/attachments/747076192921976882/747831890261835846/Banniere_luncher.png?width=1440&height=226";
+        private string fileAPI = "main.xml";
         private string armaFolder = "G:\\Steam\\steamapps\\common\\Arma 3\\";
-        private string modName = "@ALF";
+        private string modName = "@ArzoraLife";
         private string modeCompression = "lzma";
         private string remoteVersion = "";
-        private string serverIP = "--HIDE--";
+        private string serverIP = "193.70.6.201";
         private int serverPort = 2302;
-        private List<FileALF> remoteFiles;
-        private List<FileALF> localFiles;
-        private ConfigALF config = new ConfigALF();
+        private List<FileArzoraLife> remoteFiles;
+        private List<FileArzoraLife> localFiles;
+        private ConfigArzoraLife config;
         public string AppVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
         private bool blockLaunch = false;
         private bool Maintenance = false;
@@ -132,35 +132,39 @@ namespace Arma_Life_France_Launcher
         {
             try
             {
+                this.Invoke(new Action(() =>
+                {
+                    pictureBox2.Visible = false;
+                }));
                 blockLaunch = true;
                 XmlDocument doc = new XmlDocument();
                 string xmlData = Get(APIurl + fileAPI);
 
                 doc.Load(new StringReader(xmlData));
 
-                XmlNode patch = doc.ChildNodes[0].ChildNodes[1];
+                XmlNode patch = doc.ChildNodes[0].ChildNodes[0];
 
-                modName = patch.Attributes.GetNamedItem("data").Value;
+                // modName = patch.Attributes.GetNamedItem("data").Value;
                 modeCompression = patch.Attributes.GetNamedItem("mode").Value;
                 remoteVersion = patch.Attributes.GetNamedItem("launcherVersion").Value;
-                remoteFiles = new List<FileALF>();
+                remoteFiles = new List<FileArzoraLife>();
                 List<string> FileNameRemote = new List<string>();
                 List<string> FileHashRemote = new List<string>();
 
                 foreach (XmlNode file in patch.ChildNodes)
                 {
-                    FileALF tmp = new FileALF();
+                    FileArzoraLife tmp = new FileArzoraLife();
                     tmp.path = file.Attributes.GetNamedItem("path").Value;
                     tmp.hash = file.Attributes.GetNamedItem("hash").Value;
                     tmp.url = file.Attributes.GetNamedItem("url").Value;
-                    tmp.url = null;
+                    tmp.size = int.Parse(file.Attributes.GetNamedItem("size").Value);
                     remoteFiles.Add(tmp);
                     FileNameRemote.Add(tmp.path);
                     FileHashRemote.Add(tmp.hash);
                 }
 
 
-                localFiles = new List<FileALF>();
+                localFiles = new List<FileArzoraLife>();
                 List<string> FileNameLocal = new List<string>();
                 List<string> FileHashLocal = new List<string>();
 
@@ -191,10 +195,43 @@ namespace Arma_Life_France_Launcher
                     }));
                     foreach (string file in files)
                     {
-                        FileALF tmp = new FileALF();
+                        FileArzoraLife tmp = new FileArzoraLife();
                         tmp.path = file;
                         tmp.hash = getFileMD5(armaFolder + modName + "\\" + file);
                         tmp.url = null;
+                        tmp.size = (new FileInfo(armaFolder + modName + "\\" + file)).Length;
+                        localFiles.Add(tmp);
+                        FileNameLocal.Add(tmp.path);
+                        FileHashLocal.Add(tmp.hash);
+                        this.Invoke(new Action(() =>
+                        {
+                            progressBar1.Value++;
+                        }));
+                    }
+                }
+                else if(e.Argument != null && e.Argument.ToString() == "size")
+                {
+                    this.Invoke(new Action(() =>
+                    {
+                        stateLabel.Text = "Recherche des mods ...";
+                    }));
+                    if (!Directory.Exists(armaFolder + modName))
+                    {
+                        Directory.CreateDirectory(armaFolder + modName);
+                    }
+                    List<string> files = getAllFile(armaFolder + modName);
+                    this.Invoke(new Action(() =>
+                    {
+                        progressBar1.Maximum = files.Count;
+                        progressBar1.Value = 0;
+                    }));
+                    foreach (string file in files)
+                    {
+                        FileArzoraLife tmp = new FileArzoraLife();
+                        tmp.path = file;
+                        tmp.hash = null;
+                        tmp.url = null;
+                        tmp.size = (new FileInfo(armaFolder + modName + "\\" + file)).Length;
                         localFiles.Add(tmp);
                         FileNameLocal.Add(tmp.path);
                         FileHashLocal.Add(tmp.hash);
@@ -212,7 +249,7 @@ namespace Arma_Life_France_Launcher
                         progressBar1.Maximum = localFiles.Count;
                         progressBar1.Value = 0;
                     }));
-                    foreach (FileALF file in localFiles)
+                    foreach (FileArzoraLife file in localFiles)
                     {
                         FileNameLocal.Add(file.path);
                         FileHashLocal.Add(file.hash);
@@ -226,33 +263,56 @@ namespace Arma_Life_France_Launcher
                 List<string> HaveToDelete = FileNameLocal.Except(FileNameRemote).ToList();
                 foreach (string file in HaveToDelete)
                 {
-                    File.Delete(armaFolder + modName + "\\" + file);
-                    localFiles.Remove(localFiles.FirstOrDefault(o => o.path == file));
+                    if(File.Exists(armaFolder + modName + "\\" + file))
+                    {
+                        File.Delete(armaFolder + modName + "\\" + file);
+                        localFiles.Remove(localFiles.FirstOrDefault(o => o.path == file));
+                    }
                 }
 
 
-                remoteFiles = new List<FileALF>();
+                remoteFiles = new List<FileArzoraLife>();
                 foreach (XmlNode file in patch.ChildNodes)
                 {
-                    FileALF tmp = new FileALF();
+                    FileArzoraLife tmp = new FileArzoraLife();
                     tmp.path = file.Attributes.GetNamedItem("path").Value;
                     tmp.hash = file.Attributes.GetNamedItem("hash").Value;
                     tmp.url = file.Attributes.GetNamedItem("url").Value;
+                    tmp.size = int.Parse(file.Attributes.GetNamedItem("size").Value);
                     remoteFiles.Add(tmp);
                     FileNameRemote.Add(tmp.path);
                     FileHashRemote.Add(tmp.hash);
                 }
 
-                List<FileALF> HaveToDownload = new List<FileALF>();
-                foreach (FileALF remoteFile in remoteFiles)
+                List<FileArzoraLife> HaveToDownload = new List<FileArzoraLife>();
+                foreach (FileArzoraLife remoteFile in remoteFiles)
                 {
-                    if (localFiles.FirstOrDefault(o => o.path == remoteFile.path) == null)
+                    if(e.Argument != null && e.Argument.ToString() == "size")
                     {
-                        HaveToDownload.Add(remoteFile);
+                        if (localFiles.FirstOrDefault(o => o.path == remoteFile.path) != null)
+                        {
+                            FileArzoraLife tmp = localFiles.FirstOrDefault(o => o.path == remoteFile.path);
+
+                            if(tmp.size != remoteFile.size)
+                            {
+                                HaveToDownload.Add(remoteFile);
+                            }
+                        }
+                        else
+                        {
+                            HaveToDownload.Add(remoteFile);
+                        }
                     }
-                    else if (localFiles.FirstOrDefault(o => o.hash == remoteFile.hash) == null)
+                    else
                     {
-                        HaveToDownload.Add(remoteFile);
+                        if (localFiles.FirstOrDefault(o => o.path == remoteFile.path) == null)
+                        {
+                            HaveToDownload.Add(remoteFile);
+                        }
+                        else if (localFiles.FirstOrDefault(o => o.hash == remoteFile.hash) == null)
+                        {
+                            HaveToDownload.Add(remoteFile);
+                        }
                     }
                 }
 
@@ -273,7 +333,7 @@ namespace Arma_Life_France_Launcher
                 {
                     int c = 0;
                     int total = HaveToDownload.Count;
-                    foreach (FileALF file in HaveToDownload)
+                    foreach (FileArzoraLife file in HaveToDownload)
                     {
                         c++;
                         this.Invoke(new Action(() =>
@@ -292,7 +352,7 @@ namespace Arma_Life_France_Launcher
                         {
                             File.Delete(armaFolder + modName + "\\" + file.path);
                         }
-                        string dlurl = APIurl + file.url;
+                        string dlurl = APIurl + file.url + "." + modeCompression;
                         DGF.DownloadFile(dlurl, armaFolder + modName + "\\" + file.path + "." + modeCompression);
                         while (!DGF.DownloadCompleted.finish)
                         {
@@ -346,6 +406,11 @@ namespace Arma_Life_France_Launcher
             {
                 MessageBox.Show("Erreur Fatale !\r\n"+ex.Message);
             }
+
+            this.Invoke(new Action(() =>
+            {
+                pictureBox2.Visible = true;
+            }));
         }
 
         private static string FormatBytes(long bytes)
@@ -398,37 +463,24 @@ namespace Arma_Life_France_Launcher
             Process arma3 = new Process();
             arma3.StartInfo.FileName = armaFolder + "arma3battleye.exe";
             arma3.StartInfo.Arguments = "-mod="+modName+" -skipIntro -noSplash -noPause -world=empty -noFilePatching -nologs -connect="+ serverIP + " -port="+serverPort;
-            arma3.Start();
-            this.Visible = false;
-            Thread.Sleep(1000);
-            notifyIcon1.Visible = true;
-            notifyIcon1.ShowBalloonTip(10000, "Launcher Réduit", "Votre launcher ALF à été réduit le temps que vous êtes sur le servuer.", ToolTipIcon.Info);
-        }
-
-        private void materialFlatButton1_Click(object sender, EventArgs e)
-        {
-            Process.Start("ts3server://151.80.109.47");
-        }
-
-        private void materialFlatButton3_Click(object sender, EventArgs e)
-        {
-            Process.Start("https://arma3lifefrance.fr/forum/");
-        }
-
-        private void materialFlatButton2_Click(object sender, EventArgs e)
-        {
-            Process.Start("https://intranet.arma3lifefrance.fr/");
-        }
-
-        private void materialFlatButton4_Click(object sender, EventArgs e)
-        {
-            Process.Start("https://lifeshare.fr/");
+            try
+            {
+                arma3.Start();
+                this.Visible = false;
+                Thread.Sleep(1000);
+                notifyIcon1.Visible = true;
+                notifyIcon1.ShowBalloonTip(10000, "Launcher Réduit", "Votre launcher ArzoraLife à été réduit le temps que vous êtes sur le servuer.", ToolTipIcon.Info);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Le jeu n'a pas pu être lancé !", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            materialLabel3.Text = "Joueurs en ligne : " + Get("--HIDE-");
-            if (Get("--HIDE--") == "maintenance")
+            materialLabel3.Text = "Joueurs en ligne : " + Get("http://193.70.6.201/index.php?playersCount");
+            if (Get("http://193.70.6.201/theme.php") == "maintenance")
             {
                 Maintenance = true;
             }
@@ -449,12 +501,12 @@ namespace Arma_Life_France_Launcher
 
         private void Init()
         {
-            config = new ConfigALF();
+            config = new ConfigArzoraLife();
             armaFolder = config.GetArmaPath();
             button1.Enabled = false;
             playBtn.Enabled = false;
-            lookupForLocal.RunWorkerAsync();
-            pictureBox1.Load(BGurl);
+            lookupForLocal.RunWorkerAsync("size");
+            pictureBox1.LoadAsync(BGurl);
 
             MaterialSkinManager materialSkin = MaterialSkinManager.Instance;
             materialSkin.AddFormToManage(this);
@@ -469,14 +521,14 @@ namespace Arma_Life_France_Launcher
             news_text.Visible = showNews;
             if (showNews)
             {
-                NewsALF news = JsonConvert.DeserializeObject<NewsALF>(Get("--HIDE--"));
-                news_image.Load(news.image);
+                NewsArzoraLife news = JsonConvert.DeserializeObject<NewsArzoraLife>(Get("http://193.70.6.201/news.json"));
+                news_image.LoadAsync(news.image);
                 news_name.Text = news.name;
                 news_text.Text = news.text;
             }
 
             Maintenance = false;
-            switch (Get("--HIDE--"))
+            switch (Get("http://193.70.6.201/theme.php"))
             {
                 case "red":
                     progressColor = Color.FromArgb(229, 57, 53);
@@ -544,11 +596,21 @@ namespace Arma_Life_France_Launcher
                 checkForUpdate();
             //////////////////////////////////
 
-            materialLabel3.Text = "Joueurs en ligne : " + Get("--HIDE--");
+            materialLabel3.Text = "Joueurs en ligne : " + Get("http://193.70.6.201/index.php?playersCount");
             SteamAPI.Init();
             if (SteamAPI.IsSteamRunning())
             {
                 materialLabel4.Text = "SteamID : " + SteamUser.GetSteamID().ToString();
+                if(Get("http://193.70.6.201/index.php?whitelist="+ SteamUser.GetSteamID().ToString()) == "0")
+                {
+                    MessageBox.Show("Vous n'êtes pas whitelisté !", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    this.Close();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Le client steam n'a pas été détecter !", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Close();
             }
         }
 
@@ -557,11 +619,11 @@ namespace Arma_Life_France_Launcher
             try
             {
                 // string GitHubToken = "TOKENHERE";
-                var client = new GitHubClient(new ProductHeaderValue("Arma-3-Life-France-Launcher"));
+                var client = new GitHubClient(new ProductHeaderValue("ArzoraLauncher"));
                 // var tokenAuth = new Credentials(GitHubToken);
                 // client.Credentials = tokenAuth;
 
-                var LatestRelease = client.Repository.Release.GetLatest("loann25310", "Arma-3-Life-France-Launcher").Result;
+                var LatestRelease = client.Repository.Release.GetLatest("loann25310", "ArzoraLauncher").Result;
 
                 if (LatestRelease.TagName != AppVersion && !LatestRelease.Prerelease)
                 {
@@ -600,6 +662,31 @@ namespace Arma_Life_France_Launcher
                     this.Visible = true;
                 }
             }
+        }
+
+        private void materialCheckBox1_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox6_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://intranet.arzora.fr/");
+        }
+
+        private void pictureBox5_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://forum.arzora.fr/");
+        }
+
+        private void pictureBox4_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://discord.gg/ursr2jT");
+        }
+
+        private void pictureBox3_Click(object sender, EventArgs e)
+        {
+            Process.Start("ts3server://ts.arzora.fr");
         }
     }
 

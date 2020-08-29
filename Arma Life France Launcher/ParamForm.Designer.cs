@@ -1,4 +1,4 @@
-﻿namespace Arma_Life_France_Launcher
+﻿namespace Arzora_Life_Launcher
 {
     partial class ParamForm
     {

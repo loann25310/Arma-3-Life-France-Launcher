@@ -1,4 +1,4 @@
-﻿namespace Arma_Life_France_Launcher
+﻿namespace Arzora_Life_Launcher
 {
     partial class Form1
     {
@@ -38,32 +38,37 @@
             this.playBtn = new MaterialSkin.Controls.MaterialRaisedButton();
             this.button1 = new MaterialSkin.Controls.MaterialFlatButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.news_text = new System.Windows.Forms.Label();
+            this.news_name = new MaterialSkin.Controls.MaterialLabel();
+            this.news_image = new System.Windows.Forms.PictureBox();
+            this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.pictureBox6 = new System.Windows.Forms.PictureBox();
+            this.pictureBox5 = new System.Windows.Forms.PictureBox();
+            this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.materialLabel4 = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel3 = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
-            this.materialFlatButton4 = new MaterialSkin.Controls.MaterialFlatButton();
-            this.materialFlatButton2 = new MaterialSkin.Controls.MaterialFlatButton();
-            this.materialFlatButton3 = new MaterialSkin.Controls.MaterialFlatButton();
-            this.materialFlatButton1 = new MaterialSkin.Controls.MaterialFlatButton();
-            this.materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.timer2 = new System.Windows.Forms.Timer(this.components);
-            this.news_name = new MaterialSkin.Controls.MaterialLabel();
-            this.news_text = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.news_image = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.news_image)).BeginInit();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // lookupForLocal
             // 
+            this.lookupForLocal.WorkerSupportsCancellation = true;
             this.lookupForLocal.DoWork += new System.ComponentModel.DoWorkEventHandler(this.lookupForLocal_DoWork);
             // 
             // progressBar2
@@ -94,7 +99,7 @@
             // 
             this.stateLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.stateLabel.Depth = 0;
-            this.stateLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.stateLabel.Font = new System.Drawing.Font("Roboto", 11F);
             this.stateLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.stateLabel.ImageAlign = System.Drawing.ContentAlignment.BottomRight;
             this.stateLabel.Location = new System.Drawing.Point(473, 466);
@@ -108,7 +113,7 @@
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label1.Depth = 0;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.label1.Font = new System.Drawing.Font("Roboto", 11F);
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.label1.ImageAlign = System.Drawing.ContentAlignment.BottomRight;
             this.label1.Location = new System.Drawing.Point(4, 466);
@@ -165,32 +170,121 @@
             this.groupBox1.TabIndex = 12;
             this.groupBox1.TabStop = false;
             // 
+            // news_text
+            // 
+            this.news_text.Location = new System.Drawing.Point(6, 45);
+            this.news_text.Name = "news_text";
+            this.news_text.Size = new System.Drawing.Size(265, 167);
+            this.news_text.TabIndex = 2;
+            this.news_text.Text = "NEWS_TEXT";
+            // 
+            // news_name
+            // 
+            this.news_name.AutoSize = true;
+            this.news_name.Depth = 0;
+            this.news_name.Font = new System.Drawing.Font("Roboto", 11F);
+            this.news_name.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.news_name.Location = new System.Drawing.Point(3, 24);
+            this.news_name.MouseState = MaterialSkin.MouseState.HOVER;
+            this.news_name.Name = "news_name";
+            this.news_name.Size = new System.Drawing.Size(101, 19);
+            this.news_name.TabIndex = 0;
+            this.news_name.Text = "NEWS_NAME";
+            // 
+            // news_image
+            // 
+            this.news_image.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.news_image.Image = global::Arzora_Life_Launcher.Properties.Resources.frame_170x208;
+            this.news_image.Location = new System.Drawing.Point(273, 6);
+            this.news_image.Name = "news_image";
+            this.news_image.Size = new System.Drawing.Size(170, 208);
+            this.news_image.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.news_image.TabIndex = 1;
+            this.news_image.TabStop = false;
+            // 
+            // materialLabel1
+            // 
+            this.materialLabel1.AutoSize = true;
+            this.materialLabel1.Depth = 0;
+            this.materialLabel1.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabel1.Location = new System.Drawing.Point(6, -3);
+            this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabel1.Name = "materialLabel1";
+            this.materialLabel1.Size = new System.Drawing.Size(47, 19);
+            this.materialLabel1.TabIndex = 0;
+            this.materialLabel1.Text = "News";
+            // 
             // groupBox2
             // 
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.pictureBox5);
+            this.groupBox2.Controls.Add(this.pictureBox6);
+            this.groupBox2.Controls.Add(this.pictureBox4);
+            this.groupBox2.Controls.Add(this.pictureBox3);
             this.groupBox2.Controls.Add(this.materialLabel4);
             this.groupBox2.Controls.Add(this.materialLabel3);
-            this.groupBox2.Controls.Add(this.materialFlatButton4);
             this.groupBox2.Controls.Add(this.materialLabel2);
-            this.groupBox2.Controls.Add(this.materialFlatButton2);
-            this.groupBox2.Controls.Add(this.materialFlatButton3);
-            this.groupBox2.Controls.Add(this.materialFlatButton1);
             this.groupBox2.Location = new System.Drawing.Point(454, 195);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(343, 215);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             // 
+            // pictureBox6
+            // 
+            this.pictureBox6.Image = global::Arzora_Life_Launcher.Properties.Resources.France;
+            this.pictureBox6.Location = new System.Drawing.Point(288, 112);
+            this.pictureBox6.Name = "pictureBox6";
+            this.pictureBox6.Size = new System.Drawing.Size(50, 50);
+            this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox6.TabIndex = 8;
+            this.pictureBox6.TabStop = false;
+            this.pictureBox6.Click += new System.EventHandler(this.pictureBox6_Click);
+            // 
+            // pictureBox5
+            // 
+            this.pictureBox5.Image = global::Arzora_Life_Launcher.Properties.Resources.Forum;
+            this.pictureBox5.Location = new System.Drawing.Point(288, 159);
+            this.pictureBox5.Name = "pictureBox5";
+            this.pictureBox5.Size = new System.Drawing.Size(50, 50);
+            this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox5.TabIndex = 7;
+            this.pictureBox5.TabStop = false;
+            this.pictureBox5.Click += new System.EventHandler(this.pictureBox5_Click);
+            // 
+            // pictureBox4
+            // 
+            this.pictureBox4.Image = global::Arzora_Life_Launcher.Properties.Resources.Discord;
+            this.pictureBox4.Location = new System.Drawing.Point(288, 62);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(50, 50);
+            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox4.TabIndex = 6;
+            this.pictureBox4.TabStop = false;
+            this.pictureBox4.Click += new System.EventHandler(this.pictureBox4_Click);
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.Image = global::Arzora_Life_Launcher.Properties.Resources.TS;
+            this.pictureBox3.Location = new System.Drawing.Point(288, 11);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(50, 50);
+            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox3.TabIndex = 5;
+            this.pictureBox3.TabStop = false;
+            this.pictureBox3.Click += new System.EventHandler(this.pictureBox3_Click);
+            // 
             // materialLabel4
             // 
             this.materialLabel4.AutoSize = true;
             this.materialLabel4.Depth = 0;
-            this.materialLabel4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.materialLabel4.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialLabel4.Location = new System.Drawing.Point(6, 41);
             this.materialLabel4.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel4.Name = "materialLabel4";
-            this.materialLabel4.Size = new System.Drawing.Size(77, 18);
+            this.materialLabel4.Size = new System.Drawing.Size(78, 19);
             this.materialLabel4.TabIndex = 4;
             this.materialLabel4.Text = "SteamID : ";
             // 
@@ -198,12 +292,12 @@
             // 
             this.materialLabel3.AutoSize = true;
             this.materialLabel3.Depth = 0;
-            this.materialLabel3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.materialLabel3.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialLabel3.Location = new System.Drawing.Point(6, 22);
             this.materialLabel3.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel3.Name = "materialLabel3";
-            this.materialLabel3.Size = new System.Drawing.Size(148, 18);
+            this.materialLabel3.Size = new System.Drawing.Size(153, 19);
             this.materialLabel3.TabIndex = 4;
             this.materialLabel3.Text = "Joueurs en ligne : 0/0";
             // 
@@ -211,99 +305,14 @@
             // 
             this.materialLabel2.AutoSize = true;
             this.materialLabel2.Depth = 0;
-            this.materialLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.materialLabel2.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.materialLabel2.Location = new System.Drawing.Point(7, -3);
             this.materialLabel2.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel2.Name = "materialLabel2";
-            this.materialLabel2.Size = new System.Drawing.Size(90, 18);
+            this.materialLabel2.Size = new System.Drawing.Size(95, 19);
             this.materialLabel2.TabIndex = 3;
             this.materialLabel2.Text = "Informations";
-            // 
-            // materialFlatButton4
-            // 
-            this.materialFlatButton4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.materialFlatButton4.AutoSize = true;
-            this.materialFlatButton4.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.materialFlatButton4.BackColor = System.Drawing.Color.White;
-            this.materialFlatButton4.Depth = 0;
-            this.materialFlatButton4.Location = new System.Drawing.Point(251, 166);
-            this.materialFlatButton4.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.materialFlatButton4.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialFlatButton4.Name = "materialFlatButton4";
-            this.materialFlatButton4.Primary = false;
-            this.materialFlatButton4.Size = new System.Drawing.Size(85, 36);
-            this.materialFlatButton4.TabIndex = 1;
-            this.materialFlatButton4.Text = "LIFE SHARE";
-            this.materialFlatButton4.UseVisualStyleBackColor = false;
-            this.materialFlatButton4.Click += new System.EventHandler(this.materialFlatButton4_Click);
-            // 
-            // materialFlatButton2
-            // 
-            this.materialFlatButton2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.materialFlatButton2.AutoSize = true;
-            this.materialFlatButton2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.materialFlatButton2.BackColor = System.Drawing.Color.White;
-            this.materialFlatButton2.Depth = 0;
-            this.materialFlatButton2.Location = new System.Drawing.Point(259, 118);
-            this.materialFlatButton2.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.materialFlatButton2.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialFlatButton2.Name = "materialFlatButton2";
-            this.materialFlatButton2.Primary = false;
-            this.materialFlatButton2.Size = new System.Drawing.Size(77, 36);
-            this.materialFlatButton2.TabIndex = 1;
-            this.materialFlatButton2.Text = "INTRANET";
-            this.materialFlatButton2.UseVisualStyleBackColor = false;
-            this.materialFlatButton2.Click += new System.EventHandler(this.materialFlatButton2_Click);
-            // 
-            // materialFlatButton3
-            // 
-            this.materialFlatButton3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.materialFlatButton3.AutoSize = true;
-            this.materialFlatButton3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.materialFlatButton3.BackColor = System.Drawing.Color.White;
-            this.materialFlatButton3.Depth = 0;
-            this.materialFlatButton3.Location = new System.Drawing.Point(277, 70);
-            this.materialFlatButton3.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.materialFlatButton3.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialFlatButton3.Name = "materialFlatButton3";
-            this.materialFlatButton3.Primary = false;
-            this.materialFlatButton3.Size = new System.Drawing.Size(59, 36);
-            this.materialFlatButton3.TabIndex = 1;
-            this.materialFlatButton3.Text = "FORUM";
-            this.materialFlatButton3.UseVisualStyleBackColor = false;
-            this.materialFlatButton3.Click += new System.EventHandler(this.materialFlatButton3_Click);
-            // 
-            // materialFlatButton1
-            // 
-            this.materialFlatButton1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.materialFlatButton1.AutoSize = true;
-            this.materialFlatButton1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.materialFlatButton1.BackColor = System.Drawing.Color.White;
-            this.materialFlatButton1.Depth = 0;
-            this.materialFlatButton1.Location = new System.Drawing.Point(244, 22);
-            this.materialFlatButton1.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.materialFlatButton1.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialFlatButton1.Name = "materialFlatButton1";
-            this.materialFlatButton1.Primary = false;
-            this.materialFlatButton1.Size = new System.Drawing.Size(92, 36);
-            this.materialFlatButton1.TabIndex = 1;
-            this.materialFlatButton1.Text = "TEAMSPEAK";
-            this.materialFlatButton1.UseVisualStyleBackColor = false;
-            this.materialFlatButton1.Click += new System.EventHandler(this.materialFlatButton1_Click);
-            // 
-            // materialLabel1
-            // 
-            this.materialLabel1.AutoSize = true;
-            this.materialLabel1.Depth = 0;
-            this.materialLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.materialLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabel1.Location = new System.Drawing.Point(6, -3);
-            this.materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabel1.Name = "materialLabel1";
-            this.materialLabel1.Size = new System.Drawing.Size(46, 18);
-            this.materialLabel1.TabIndex = 0;
-            this.materialLabel1.Text = "News";
             // 
             // timer1
             // 
@@ -315,7 +324,7 @@
             // 
             this.notifyIcon1.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
-            this.notifyIcon1.Text = "ALF - Launcher";
+            this.notifyIcon1.Text = "ArzoraLife - Launcher";
             this.notifyIcon1.DoubleClick += new System.EventHandler(this.notifyIcon1_DoubleClick);
             // 
             // timer2
@@ -324,31 +333,10 @@
             this.timer2.Interval = 2000;
             this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
             // 
-            // news_name
-            // 
-            this.news_name.AutoSize = true;
-            this.news_name.Depth = 0;
-            this.news_name.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.news_name.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.news_name.Location = new System.Drawing.Point(3, 24);
-            this.news_name.MouseState = MaterialSkin.MouseState.HOVER;
-            this.news_name.Name = "news_name";
-            this.news_name.Size = new System.Drawing.Size(105, 18);
-            this.news_name.TabIndex = 0;
-            this.news_name.Text = "NEWS_NAME";
-            // 
-            // news_text
-            // 
-            this.news_text.Location = new System.Drawing.Point(6, 45);
-            this.news_text.Name = "news_text";
-            this.news_text.Size = new System.Drawing.Size(265, 167);
-            this.news_text.TabIndex = 2;
-            this.news_text.Text = "NEWS_TEXT";
-            // 
             // pictureBox2
             // 
             this.pictureBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox2.Image = global::Arma_Life_France_Launcher.Properties.Resources.gears;
+            this.pictureBox2.Image = global::Arzora_Life_Launcher.Properties.Resources.gears;
             this.pictureBox2.Location = new System.Drawing.Point(559, 416);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(47, 47);
@@ -357,22 +345,11 @@
             this.pictureBox2.TabStop = false;
             this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
             // 
-            // news_image
-            // 
-            this.news_image.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.news_image.Image = global::Arma_Life_France_Launcher.Properties.Resources.frame_170x208;
-            this.news_image.Location = new System.Drawing.Point(273, 6);
-            this.news_image.Name = "news_image";
-            this.news_image.Size = new System.Drawing.Size(170, 208);
-            this.news_image.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.news_image.TabIndex = 1;
-            this.news_image.TabStop = false;
-            // 
             // pictureBox1
             // 
             this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox1.Image = global::Arma_Life_France_Launcher.Properties.Resources.frame_805x127;
+            this.pictureBox1.Image = global::Arzora_Life_Launcher.Properties.Resources.frame_805x127;
             this.pictureBox1.Location = new System.Drawing.Point(-2, 62);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(805, 127);
@@ -402,14 +379,18 @@
             this.Name = "Form1";
             this.Sizable = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Arma 3 Life France";
+            this.Text = "Arzora Life";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.news_image)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.news_image)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -427,10 +408,6 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.GroupBox groupBox1;
         private MaterialSkin.Controls.MaterialLabel materialLabel1;
-        private MaterialSkin.Controls.MaterialFlatButton materialFlatButton2;
-        private MaterialSkin.Controls.MaterialFlatButton materialFlatButton3;
-        private MaterialSkin.Controls.MaterialFlatButton materialFlatButton1;
-        private MaterialSkin.Controls.MaterialFlatButton materialFlatButton4;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.GroupBox groupBox2;
         private MaterialSkin.Controls.MaterialLabel materialLabel3;
@@ -442,6 +419,10 @@
         private System.Windows.Forms.Label news_text;
         private System.Windows.Forms.PictureBox news_image;
         private MaterialSkin.Controls.MaterialLabel news_name;
+        private System.Windows.Forms.PictureBox pictureBox6;
+        private System.Windows.Forms.PictureBox pictureBox5;
+        private System.Windows.Forms.PictureBox pictureBox4;
+        private System.Windows.Forms.PictureBox pictureBox3;
     }
 }
 

@@ -11,16 +11,16 @@ using MaterialSkin.Controls;
 using MaterialSkin;
 using System.Net;
 using System.IO;
-using static ALF.Main;
+using static ArzoraLife.Main;
 using System.Reflection;
 
-namespace Arma_Life_France_Launcher
+namespace Arzora_Life_Launcher
 {
     public partial class ParamForm : MaterialForm
     {
         public string AppVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
         private string currentColor = "";
-        private ConfigALF config = new ConfigALF();
+        private ConfigArzoraLife config = new ConfigArzoraLife();
         //ColorScheme
         MaterialSkinManager materialSkin = MaterialSkinManager.Instance;
         ColorScheme redColor = new ColorScheme(Primary.Red600, Primary.Red800, Primary.Red800, Accent.Red200, TextShade.WHITE);
@@ -39,7 +39,7 @@ namespace Arma_Life_France_Launcher
         private void ParamForm_Load(object sender, EventArgs e)
         {
             versionLabel.Text = "V." + AppVersion;
-            config = new ConfigALF();
+            config = new ConfigArzoraLife();
             Form form = new Form1();
             materialSkin.AddFormToManage(this);
             if (config.GetIsDarkTheme())
@@ -53,7 +53,7 @@ namespace Arma_Life_France_Launcher
                 materialRadioButton7.Checked = true;
             }
             materialSingleLineTextField1.Text = config.GetArmaPath();
-            switch (Get("http://127.0.0.1/alf/View.php?api&getTheme"))
+            switch (Get("https://www.serveur-lagarde.fr/arzoralife/api.txt"))
             {
                 case "red":
                     materialRadioButton1.Checked = true;
@@ -163,7 +163,7 @@ namespace Arma_Life_France_Launcher
 
         private void materialRaisedButton1_Click(object sender, EventArgs e)
         {
-            ConfigALF newConfig = config;
+            ConfigArzoraLife newConfig = config;
             newConfig.SetCustomColor(currentColor);
             newConfig.SetTheme(materialRadioButton8.Checked);
             if (Directory.Exists(materialSingleLineTextField1.Text))
